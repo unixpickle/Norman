@@ -4,6 +4,21 @@
     <string name="app_name">Norman</string>
     <string name="title_activity_norman">Norman</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_add">Add</string>
+    <string name="title_activity_add">New Message</string>
+    <string name="action_default">Make Default</string>
+    <string name="leaving">Leaving</string>
+    <string name="arriving">Arriving</string>
+    <string name="contact_hint">Name, phone number, etc.</string>
+    <string name="proximity">Proximity</string>
+    <string name="time_range">Time range</string>
+
+    <string-array name="repeat_options">
+        <item>Hourly</item>
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+        <item>Annually</item>
+    </string-array>
 
 </resources>
