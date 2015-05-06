@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class Add extends ActionBarActivity {
 
@@ -14,10 +16,10 @@ public class Add extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-        Spinner spinner = (Spinner) findViewById(R.id.repeat_spinner);
+        Spinner spinner = (Spinner)findViewById(R.id.repeat_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-            R.array.repeat_options, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            R.array.repeat_options, R.layout.add_spinner);
+        adapter.setDropDownViewResource(R.layout.add_spinner);
         spinner.setAdapter(adapter);
     }
 

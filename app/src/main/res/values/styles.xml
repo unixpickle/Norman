@@ -5,4 +5,12 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="AddFontSize">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="AddItem" parent="AddFontSize">
+        <item name="android:layout_marginTop">@dimen/add_layout_margin</item>
+    </style>
+
 </resources>

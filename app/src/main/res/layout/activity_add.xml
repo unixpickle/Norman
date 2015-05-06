@@ -1,60 +1,81 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context="bates.norman.Add"
-    android:orientation="vertical">
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context="bates.norman.Add">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/leaving" />
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/arriving" />
-    </RadioGroup>
-    <EditText
-        android:id="@+id/contact"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/contact_hint" />
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <CheckBox
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/place"
+            android:hint="@string/place_hint"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <EditText
+            style="@style/AddItem"
+            android:id="@+id/contact"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/contact_hint" />
+        <RadioGroup
+            style="@style/AddItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <RadioButton
+                style="@style/AddFontSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/leaving" />
+            <RadioButton
+                style="@style/AddFontSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/arriving" />
+        </RadioGroup>
+        <LinearLayout
+            style="@style/AddItem"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/proximity" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView android:text="@string/time_range" android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/repeat_spinner" />
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <EditText
+                style="@style/AddFontSize"
+                android:id="@+id/proximity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/proximity" />
+        </LinearLayout>
+        <LinearLayout
+            style="@style/AddItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                style="@style/AddFontSize"
+                android:id="@+id/time_range_label"
+                android:text="@string/time_range"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            style="@style/AddItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Spinner
+                style="@style/AddFontSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/repeat_spinner" />
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

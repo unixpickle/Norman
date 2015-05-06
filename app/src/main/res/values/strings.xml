@@ -9,9 +9,10 @@
     <string name="action_default">Make Default</string>
     <string name="leaving">Leaving</string>
     <string name="arriving">Arriving</string>
-    <string name="contact_hint">Name, phone number, etc.</string>
-    <string name="proximity">Proximity</string>
-    <string name="time_range">Time range</string>
+    <string name="contact_hint">Contact name, phone #, etc.</string>
+    <string name="proximity">Proximity (miles)</string>
+    <string name="time_range">Limit to time range</string>
+    <string name="place_hint">Place</string>
 
     <string-array name="repeat_options">
         <item>Hourly</item>
