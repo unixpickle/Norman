@@ -38,8 +38,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
-public class Add extends ActionBarActivity
-        implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class Add extends ActionBarActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private final LatLngBounds GLOBAL_BOUNDS = new LatLngBounds.Builder()
             .include(new LatLng(85, -180))
@@ -61,9 +60,8 @@ public class Add extends ActionBarActivity
         setContentView(R.layout.activity_add);
 
         apiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, 0, this)
                 .addApi(Places.GEO_DATA_API)
-                .addOnConnectionFailedListener(this)
-                .addConnectionCallbacks(this)
                 .build();
 
         placeTextView = (AutoCompleteTextView)findViewById(R.id.place);
@@ -77,19 +75,6 @@ public class Add extends ActionBarActivity
             R.array.repeat_options, R.layout.add_spinner);
         adapter.setDropDownViewResource(R.layout.add_spinner);
         repeatSpinner.setAdapter(adapter);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        apiClient.connect();
-        Log.v("Norman", "attempting to connect");
-    }
-
-    @Override
-    protected void onStop() {
-        apiClient.disconnect();
-        super.onStop();
     }
 
     @Override
@@ -111,19 +96,6 @@ public class Add extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onConnected(Bundle bundle) {
-        Log.v("Norman", "connected");
-        if (placeTextView.getText().length() > 0) {
-            placeAdapter.getFilter().filter(placeTextView.getText());
-        }
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        Log.v("Norman", "suspended");
     }
 
     @Override
@@ -227,21 +199,24 @@ public class Add extends ActionBarActivity
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 if (!apiClient.isConnected()) {
+                    Log.v("Norman", "not connected");
                     return new FilterResults();
                 }
                 Log.v("Norman", "searching constraint: " + constraint);
                 PendingResult<AutocompletePredictionBuffer> results =
                         Places.GeoDataApi.getAutocompletePredictions(apiClient,
                                 constraint.toString(), GLOBAL_BOUNDS, null);
+                Log.v("Norman", "awaiting buffer...");
                 AutocompletePredictionBuffer buffer = results.await(60, TimeUnit.SECONDS);
                 if (buffer == null) {
                     Log.e("Norman", "buffer is null");
                     return new FilterResults();
                 } else if (!buffer.getStatus().isSuccess()) {
                     buffer.release();
-                    Log.e("Norman", "prediction failed: " + buffer.getStatus().getStatusMessage());
+                    Log.e("Norman", "prediction failed: " + buffer.getStatus());
                     return new FilterResults();
                 }
+                Log.v("Norman", "buffer count: " + buffer.getCount());
                 ArrayList<String> names = new ArrayList<String>();
                 for (int i = 0; i < buffer.getCount(); ++i) {
                     names.add(buffer.get(i).getDescription());
