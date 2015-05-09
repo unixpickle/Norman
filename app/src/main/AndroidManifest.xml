@@ -20,6 +20,11 @@
             android:name=".Add"
             android:label="@string/title_activity_add" >
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCmc2yZ2bqtDQ4JV3AwjDEA6BxF" />
+
     </application>
 
 </manifest>
