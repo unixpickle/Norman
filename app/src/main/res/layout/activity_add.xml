@@ -9,12 +9,12 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/place"
             android:hint="@string/place_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <EditText
+        <AutoCompleteTextView
             style="@style/AddItem"
             android:id="@+id/contact"
             android:layout_width="fill_parent"
@@ -47,7 +47,8 @@
                 android:id="@+id/proximity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/proximity" />
+                android:hint="@string/proximity"
+                android:inputType="numberDecimal" />
         </LinearLayout>
         <LinearLayout
             style="@style/AddItem"
@@ -61,7 +62,8 @@
                 android:id="@+id/time_range_label"
                 android:text="@string/time_range"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="#000000" />
         </LinearLayout>
         <LinearLayout
             style="@style/AddItem"

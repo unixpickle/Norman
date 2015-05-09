@@ -5,22 +5,30 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 public class Add extends ActionBarActivity {
 
+    private AutoCompleteTextView placeTextView;
+    private AutoCompleteTextView contactTextView;
+    private Spinner repeatSpinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-        Spinner spinner = (Spinner)findViewById(R.id.repeat_spinner);
+        placeTextView = (AutoCompleteTextView)findViewById(R.id.place);
+        contactTextView = (AutoCompleteTextView)findViewById(R.id.contact);
+
+        repeatSpinner = (Spinner)findViewById(R.id.repeat_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
             R.array.repeat_options, R.layout.add_spinner);
         adapter.setDropDownViewResource(R.layout.add_spinner);
-        spinner.setAdapter(adapter);
+        repeatSpinner.setAdapter(adapter);
     }
 
 
