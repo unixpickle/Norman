@@ -35,6 +35,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.concurrent.TimeUnit;
 
 public class Add extends ActionBarActivity
         implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -60,7 +62,6 @@ public class Add extends ActionBarActivity
 
         apiClient = new GoogleApiClient.Builder(this)
                 .addApi(Places.GEO_DATA_API)
-                .addApi(Places.PLACE_DETECTION_API)
                 .addOnConnectionFailedListener(this)
                 .addConnectionCallbacks(this)
                 .build();
@@ -77,6 +78,7 @@ public class Add extends ActionBarActivity
         adapter.setDropDownViewResource(R.layout.add_spinner);
         repeatSpinner.setAdapter(adapter);
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -114,7 +116,9 @@ public class Add extends ActionBarActivity
     @Override
     public void onConnected(Bundle bundle) {
         Log.v("Norman", "connected");
-        updatePlaceAutocomplete();
+        if (placeTextView.getText().length() > 0) {
+            placeAdapter.getFilter().filter(placeTextView.getText());
+        }
     }
 
     @Override
@@ -124,13 +128,7 @@ public class Add extends ActionBarActivity
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.v("Norman", "connection failed");
-    }
-
-    public void updatePlaceAutocomplete() {
-        placeAdapter.add("yo");
-        placeAdapter.add("hey");
-        placeAdapter.add("wassup");
+        Log.e("Norman", "connection failed");
     }
 
     private class PlaceAdapter implements ListAdapter, Filterable {
@@ -143,16 +141,6 @@ public class Add extends ActionBarActivity
         PlaceAdapter(Context context, int resource) {
             this.context = context;
             this.resource = resource;
-        }
-
-        public void add(String place) {
-            places.add(place);
-            notifyChange();
-        }
-
-        public void clear() {
-            places.clear();
-            notifyChange();
         }
 
         protected void notifyChange() {
@@ -238,11 +226,39 @@ public class Add extends ActionBarActivity
 
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                return new FilterResults();
+                if (!apiClient.isConnected()) {
+                    return new FilterResults();
+                }
+                Log.v("Norman", "searching constraint: " + constraint);
+                PendingResult<AutocompletePredictionBuffer> results =
+                        Places.GeoDataApi.getAutocompletePredictions(apiClient,
+                                constraint.toString(), GLOBAL_BOUNDS, null);
+                AutocompletePredictionBuffer buffer = results.await(60, TimeUnit.SECONDS);
+                if (buffer == null) {
+                    Log.e("Norman", "buffer is null");
+                    return new FilterResults();
+                } else if (!buffer.getStatus().isSuccess()) {
+                    buffer.release();
+                    Log.e("Norman", "prediction failed: " + buffer.getStatus().getStatusMessage());
+                    return new FilterResults();
+                }
+                ArrayList<String> names = new ArrayList<String>();
+                for (int i = 0; i < buffer.getCount(); ++i) {
+                    names.add(buffer.get(i).getDescription());
+                }
+                buffer.release();
+                FilterResults res = new FilterResults();
+                res.values = names;
+                res.count = names.size();
+                return res;
             }
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
+                places = (ArrayList<String>)results.values;
+                if (places == null) {
+                    places = new ArrayList<String>();
+                }
                 notifyChange();
             }
 
